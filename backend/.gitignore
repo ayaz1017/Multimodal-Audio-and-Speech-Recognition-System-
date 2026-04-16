@@ -1,0 +1,39 @@
+# .gitignore for Voice Emotion Detection Backend
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Environment
+.env
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Audio storage (don't commit recordings)
+audio_storage/
+
+# Database
+*.db
+*.sqlite3
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/

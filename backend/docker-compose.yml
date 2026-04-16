@@ -1,0 +1,51 @@
+# ─────────────────────────────────────────────────────────
+# Voice Emotion Detection — Full Stack Docker Compose
+# ─────────────────────────────────────────────────────────
+version: "3.9"
+
+services:
+  # ── PostgreSQL Database ────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: voice_emotion_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: voice_emotion_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d voice_emotion_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── FastAPI Backend ────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: voice_emotion_api
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@postgres:5432/voice_emotion_db
+      SECRET_KEY: change-this-to-a-random-secret-in-production
+      DEBUG: "true"
+      AUDIO_STORAGE_PATH: /app/audio_storage
+      CORS_ORIGINS: '["http://localhost:5173","http://localhost:3000"]'
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./audio_storage:/app/audio_storage
+      - ./app:/app/app  # Hot-reload in dev
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+volumes:
+  postgres_data:
+    driver: local

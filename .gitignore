@@ -1,0 +1,48 @@
+# ── Python ───────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+build/
+dist/
+*.egg
+
+# ── Virtual Environments ─────────────────────────────────────────
+.venv/
+venv/
+env/
+
+# ── Secrets / Environment ─────────────────────────────────────────
+.env
+*.env
+
+# ── Database files ────────────────────────────────────────────────
+*.db
+*.sqlite3
+
+# ── Log files ─────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Audio storage (recordings should not be committed) ───────────
+audio_storage/
+
+# ── Node.js ───────────────────────────────────────────────────────
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# ── OS & Editor ───────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Testing ───────────────────────────────────────────────────────
+.coverage
+htmlcov/
+.pytest_cache/
