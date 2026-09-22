@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef } from "react";
 
 interface VoiceOscilloscopeProps {
   energy: number; // 0-100
@@ -9,7 +9,7 @@ interface VoiceOscilloscopeProps {
 export const VoiceOscilloscope = ({ energy, active, color = "#10b981" }: VoiceOscilloscopeProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const dataPoints = useRef<number[]>(new Array(100).fill(0));
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const canvas = canvasRef.current;
